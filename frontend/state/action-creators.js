@@ -22,8 +22,8 @@ export function setQuiz() {
   return({type: SET_QUIZ_INTO_STATE});
 }
 
-export function inputChange() {
-  return({type: INPUT_CHANGE});
+export function inputChange(data) {
+  return({type: INPUT_CHANGE, payload: data});
 }
 
 export function resetForm() {
@@ -40,7 +40,7 @@ export const fetchQuiz = () => dispatch => {
       dispatch({ type: SET_QUIZ_INTO_STATE, payload: res.data});
     })
     .catch(err => {
-      dispatch({ type: SET_QUIZ_INTO_STATE, payload: err.response });
+      console.log(err);
     });
 }
 export const postAnswer = (data) => dispatch => {
@@ -56,18 +56,17 @@ export const postAnswer = (data) => dispatch => {
       console.log(err)
     });
 }
-export function postQuiz() {
-  return function (dispatch) {
+export const postQuiz = (data) => dispatch => {
     // On successful POST:
     // - Dispatch the correct message to the the appropriate state
     // - Dispatch the resetting of the form
-    axios.post('http://localhost:9000/api/quiz/new')
-      .then(res => {
-        dispatch({ type: SUCCESS, payload: res.data});
-      })
-      .catch(err => {
-        dispatch({ type: ERROR, payload: err.response });
-      });
-  }
+  axios.post('http://localhost:9000/api/quiz/new', data)
+    .then(res => {
+      dispatch({ type: SET_INFO_MESSAGE, payload: res.data});
+      dispatch({ type: RESET_FORM });
+    })
+    .catch(err => {
+      console.log(err)
+    });
 }
 // ❗ On promise rejections, use log statements or breakpoints, and put an appropriate error message in state

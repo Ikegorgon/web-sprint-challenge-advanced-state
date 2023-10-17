@@ -48,7 +48,11 @@ const initialMessageState = ''
 function infoMessage(state = initialMessageState, action) {
   switch (action.type) {
     case SET_INFO_MESSAGE:
-      return (action.payload.message);
+      if (action.payload.message) {
+        return (action.payload.message);
+      } else {
+        return "Congrats: \"" + action.payload.question + "\" is a great question!";
+      }
     default: 
       return state;
   }
@@ -62,10 +66,9 @@ const initialFormState = {
 function form(state = initialFormState, action) {
   switch (action.type) {
     case INPUT_CHANGE:
-      console.log(action.payload)
-      return {...state, newQuestion: action.payload};
+      return {...state, [action.payload.field]: action.payload.value};
     case RESET_FORM:
-      return {initialFormState};
+      return {...initialFormState};
     default: 
       return state;
   }
