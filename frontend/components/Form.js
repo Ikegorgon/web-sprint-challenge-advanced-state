@@ -10,14 +10,17 @@ const Form = (props) => {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    const newForm = { question_text: props.form.newQuestion, 
-                      true_answer_text: props.form.newTrueAnswer, 
-                      false_answer_text: props.form.newFalseAnswer }
+    const newForm = {question_text: props.form.newQuestion.trim(), 
+                      true_answer_text: props.form.newTrueAnswer.trim(), 
+                      false_answer_text: props.form.newFalseAnswer.trim()};
     props.postQuiz(newForm);
   }
 
   const testFilled = () => {
-    if (props.form.newQuestion !== "" && props.form.newTrueAnswer !== "" && props.form.newFalseAnswer !== "") {
+    console.log(props.form.newQuestion.trim().length > 1);
+    if (props.form.newQuestion.trim().length > 1 
+        && props.form.newTrueAnswer.trim().length > 1
+        && props.form.newFalseAnswer.trim().length > 1) {
       return true;
     } else {
       return false;

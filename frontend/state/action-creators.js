@@ -51,6 +51,7 @@ export const postAnswer = (data) => dispatch => {
     axios.post('http://localhost:9000/api/quiz/answer', data)
     .then(res => {
       dispatch({ type: SET_INFO_MESSAGE, payload: res.data});
+      dispatch(fetchQuiz());
     })
     .catch(err => {
       console.log(err)
